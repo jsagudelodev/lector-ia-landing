@@ -71,7 +71,10 @@
               "buildTarget": "lector-ia-landing:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4300
+          }
         },
         "test": {
           "builder": "@angular/build:unit-test"
