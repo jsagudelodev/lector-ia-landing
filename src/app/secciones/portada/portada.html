@@ -1,0 +1,67 @@
+<section class="portada" id="inicio">
+  <div class="portada__fondo" aria-hidden="true"></div>
+
+  <div class="portada__contenido contenedor">
+    <div class="portada__texto">
+      <p class="portada__insignia">
+        <span class="portada__punto" aria-hidden="true"></span>
+        Facturas, declaraciones de importación, RUT, extractos y más
+      </p>
+
+      <h1 class="portada__titulo">
+        Tus documentos, <span class="texto-degradado">convertidos en datos</span> en segundos.
+      </h1>
+
+      <p class="portada__descripcion">
+        Sube un PDF o una foto y recibe la información como JSON o Excel, lista para tu sistema. Cada dato
+        dice de dónde salió, y el servicio te avisa cuando algo no cuadra.
+      </p>
+
+      <div class="portada__acciones">
+        <a class="boton boton--primario boton--grande" [href]="enlacePrueba">Pedir una prueba gratis</a>
+        <a class="boton boton--secundario boton--grande" href="#como-funciona">Ver cómo funciona</a>
+      </div>
+
+      <ul class="portada__garantias">
+        @for (garantia of garantias; track garantia) {
+          <li>{{ garantia }}</li>
+        }
+      </ul>
+    </div>
+
+    <div class="portada__demo" role="img" aria-label="Ejemplo: una factura convertida en datos estructurados, cada uno verificado">
+      <div class="documento" aria-hidden="true">
+        <div class="documento__cabecera">
+          <span class="documento__logo"></span>
+          <span class="documento__linea documento__linea--titulo"></span>
+        </div>
+        <span class="documento__linea documento__linea--resaltada"></span>
+        <span class="documento__linea"></span>
+        <span class="documento__linea documento__linea--corta documento__linea--resaltada"></span>
+        <div class="documento__tabla">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span class="documento__linea documento__linea--total documento__linea--resaltada"></span>
+        <span class="documento__escaner"></span>
+      </div>
+
+      <div class="respuesta" aria-hidden="true">
+        <div class="respuesta__barra">
+          <span class="respuesta__estado">200 OK</span>
+          <span class="respuesta__plantilla">factura_electronica_dian</span>
+        </div>
+        <div class="respuesta__codigo">
+          <div class="respuesta__fila">{{ '{' }}</div>
+          @for (campo of campos; track campo.clave; let indice = $index) {
+            <div class="respuesta__fila respuesta__fila--campo" [style.animation-delay]="retraso(indice)">
+              <span class="respuesta__clave">"{{ campo.clave }}"</span>:
+              <span class="respuesta__valor">{{ campo.valor }}</span>
+              <span class="respuesta__verificado">verificado</span>
+            </div>
+          }
+          <div class="respuesta__fila">{{ '}' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

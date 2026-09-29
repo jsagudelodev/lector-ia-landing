@@ -1,0 +1,37 @@
+<section class="seccion como" id="como-funciona">
+  <div class="contenedor">
+    <header class="seccion__encabezado" appRevelar>
+      <span class="seccion__etiqueta">Cómo funciona</span>
+      <h2 class="seccion__titulo">Tres pasos, y el primero es opcional</h2>
+      <p class="seccion__descripcion">
+        Quien no programa lo usa desde el panel. Quien integra, con una sola llamada a la API.
+      </p>
+    </header>
+
+    <ol class="pasos">
+      @for (paso of pasos; track paso.numero) {
+        <li class="pasos__paso" appRevelar>
+          <span class="pasos__numero">{{ paso.numero }}</span>
+          <h3 class="pasos__titulo">{{ paso.titulo }}</h3>
+          <p class="pasos__texto">{{ paso.texto }}</p>
+        </li>
+      }
+    </ol>
+
+    <div class="afinar" appRevelar>
+      <div>
+        <span class="afinar__etiqueta">Nuevo</span>
+        <h3 class="afinar__titulo">Enséñale con tus propios documentos</h3>
+        <p class="afinar__texto">
+          Sube varias facturas de proveedores distintos y la plantilla se va afinando: ves qué campos llegan,
+          cuáles faltan y qué cambiaría. Tú decides qué se guarda.
+        </p>
+      </div>
+      <ul class="afinar__lista">
+        @for (ventaja of ventajasAfinado; track ventaja) {
+          <li class="afinar__item">{{ ventaja }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

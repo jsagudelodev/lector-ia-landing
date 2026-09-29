@@ -1,0 +1,46 @@
+<section class="seccion" id="plantillas">
+  <div class="contenedor">
+    <header class="seccion__encabezado" appRevelar>
+      <span class="seccion__etiqueta">Plantillas</span>
+      <h2 class="seccion__titulo">{{ total }} documentos listos para leer desde el primer día</h2>
+      <p class="seccion__descripcion">
+        Hechas para los documentos de aquí: la DIAN, la VUCE, el SENAE y el comercio exterior. Úsalas tal
+        cual o llévatelas a tu cuenta y adáptalas.
+      </p>
+    </header>
+
+    <div class="plantillas__filtros" role="group" aria-label="Filtrar por país" appRevelar>
+      @for (filtro of filtros; track filtro.codigo) {
+        <button
+          type="button"
+          class="plantillas__filtro"
+          [class.plantillas__filtro--activo]="paisSeleccionado() === filtro.codigo"
+          [attr.aria-pressed]="paisSeleccionado() === filtro.codigo"
+          (click)="seleccionar(filtro.codigo)"
+        >
+          {{ filtro.nombre }}
+        </button>
+      }
+    </div>
+
+    <div class="plantillas__grupos">
+      @for (grupo of grupos(); track grupo.nombre) {
+        <article class="plantillas__grupo" appRevelar>
+          <h3 class="plantillas__grupo-titulo">{{ grupo.nombre }}</h3>
+          <ul class="plantillas__lista">
+            @for (plantilla of grupo.plantillas; track plantilla.nombre) {
+              <li class="plantillas__item">
+                <span>{{ plantilla.nombre }}</span>
+                <span class="plantillas__pais">{{ plantilla.pais }}</span>
+              </li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+
+    <p class="plantillas__nota" appRevelar>
+      ¿Tu documento no está? Pega el JSON que esperas recibir, o sube uno y el servicio te propone la estructura.
+    </p>
+  </div>
+</section>

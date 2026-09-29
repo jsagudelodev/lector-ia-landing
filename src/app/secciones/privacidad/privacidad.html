@@ -1,0 +1,23 @@
+<section class="seccion">
+  <div class="contenedor privacidad" appRevelar>
+    <div class="privacidad__texto">
+      <span class="seccion__etiqueta">Privacidad</span>
+      <h2 class="seccion__titulo">Tus facturas son tuyas</h2>
+      <p class="seccion__descripcion">
+        Leemos tus documentos para darte los datos, y nada más. No quedan guardados en nuestros servidores.
+      </p>
+    </div>
+
+    <ul class="privacidad__lista">
+      @for (garantia of garantias; track garantia.titulo) {
+        <li class="privacidad__item">
+          <span class="privacidad__marca" aria-hidden="true">✓</span>
+          <div>
+            <h3 class="privacidad__titulo">{{ garantia.titulo }}</h3>
+            <p class="privacidad__descripcion">{{ garantia.texto }}</p>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

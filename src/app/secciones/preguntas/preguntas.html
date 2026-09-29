@@ -1,0 +1,17 @@
+<section class="seccion" id="preguntas">
+  <div class="contenedor preguntas">
+    <header class="seccion__encabezado" appRevelar>
+      <span class="seccion__etiqueta">Preguntas frecuentes</span>
+      <h2 class="seccion__titulo">Lo que suelen preguntar antes de empezar</h2>
+    </header>
+
+    <div class="preguntas__lista" appRevelar>
+      @for (item of preguntas; track item.pregunta) {
+        <details class="preguntas__item">
+          <summary class="preguntas__pregunta">{{ item.pregunta }}</summary>
+          <p class="preguntas__respuesta">{{ item.respuesta }}</p>
+        </details>
+      }
+    </div>
+  </div>
+</section>

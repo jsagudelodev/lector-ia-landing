@@ -1,0 +1,141 @@
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: block;
+}
+
+.encabezado {
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  background: rgb(6 8 15 / 0.72);
+  border-bottom: 1px solid var(--color-borde);
+
+  &__barra {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-6);
+    height: var(--alto-encabezado);
+  }
+
+  &__marca {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-3);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  &__enlaces {
+    display: flex;
+    gap: var(--espacio-5);
+    margin: 0 auto 0 var(--espacio-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  &__enlace {
+    color: var(--color-texto-suave);
+    font-size: var(--texto-sm);
+    text-decoration: none;
+    transition: color var(--transicion);
+
+    &:hover {
+      color: var(--color-texto);
+    }
+  }
+
+  &__solo-movil {
+    display: none;
+  }
+
+  &__acciones {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-5);
+    margin-left: auto;
+  }
+
+  &__menu {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 var(--espacio-3);
+    border: 1px solid var(--color-borde-fuerte);
+    border-radius: var(--radio-md);
+    background: var(--color-superficie);
+    cursor: pointer;
+  }
+
+  &__menu-linea {
+    display: block;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-texto);
+    transition: transform var(--transicion);
+  }
+
+  &--abierto &__menu-linea:first-child {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  &--abierto &__menu-linea:last-child {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .encabezado {
+    &__enlace--panel {
+      display: none;
+    }
+
+    &__menu {
+      display: flex;
+    }
+
+    &__enlaces {
+      position: absolute;
+      top: var(--alto-encabezado);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      margin: 0;
+      padding: var(--espacio-3) var(--espacio-5) var(--espacio-5);
+      background: rgb(6 8 15 / 0.97);
+      border-bottom: 1px solid var(--color-borde);
+      visibility: hidden;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity var(--transicion), transform var(--transicion), visibility var(--transicion);
+
+      .encabezado__enlace {
+        display: block;
+        padding: var(--espacio-3) 0;
+        font-size: var(--texto-base);
+      }
+    }
+
+    &__solo-movil {
+      display: list-item;
+    }
+
+    &--abierto &__enlaces {
+      visibility: visible;
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .encabezado__marca span {
+    display: none;
+  }
+}

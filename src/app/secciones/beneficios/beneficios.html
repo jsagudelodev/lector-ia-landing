@@ -1,0 +1,21 @@
+<section class="seccion" id="producto">
+  <div class="contenedor">
+    <header class="seccion__encabezado seccion__encabezado--centrado" appRevelar>
+      <span class="seccion__etiqueta">Producto</span>
+      <h2 class="seccion__titulo">Datos en los que puedes confiar, no solo datos rápidos</h2>
+      <p class="seccion__descripcion">
+        Extraer es la parte fácil. Lo difícil es saber si lo extraído está bien, y para eso está hecho.
+      </p>
+    </header>
+
+    <ul class="beneficios">
+      @for (beneficio of beneficios; track beneficio.titulo) {
+        <li class="beneficios__tarjeta" appRevelar>
+          <span class="beneficios__icono" aria-hidden="true">{{ beneficio.icono }}</span>
+          <h3 class="beneficios__titulo">{{ beneficio.titulo }}</h3>
+          <p class="beneficios__texto">{{ beneficio.texto }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

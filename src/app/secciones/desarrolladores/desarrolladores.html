@@ -1,0 +1,46 @@
+<section class="seccion desarrolladores" id="desarrolladores">
+  <div class="contenedor desarrolladores__contenido">
+    <div appRevelar>
+      <header class="seccion__encabezado">
+        <span class="seccion__etiqueta">Desarrolladores</span>
+        <h2 class="seccion__titulo">Una llamada a la API y listo</h2>
+        <p class="seccion__descripcion">
+          Una API REST documentada, que responde igual con cualquier modelo de IA detrás. Integras hoy y no
+          cambias tu código mañana.
+        </p>
+      </header>
+
+      <ul class="desarrolladores__capacidades">
+        @for (capacidad of capacidades; track capacidad.titulo) {
+          <li class="desarrolladores__capacidad">
+            <strong>{{ capacidad.titulo }}</strong>
+            <span>{{ capacidad.texto }}</span>
+          </li>
+        }
+      </ul>
+
+      <a class="boton boton--secundario" [href]="sitio.urlDocumentacion">Ver la documentación de la API</a>
+    </div>
+
+    <div class="terminal" appRevelar>
+      <div class="terminal__barra">
+        <span class="terminal__puntos" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="terminal__pestanas" role="tablist" aria-label="Lenguaje del ejemplo">
+          @for (pestana of pestanas; track pestana.lenguaje) {
+            <button
+              type="button"
+              role="tab"
+              class="terminal__pestana"
+              [class.terminal__pestana--activa]="lenguaje() === pestana.lenguaje"
+              [attr.aria-selected]="lenguaje() === pestana.lenguaje"
+              (click)="seleccionar(pestana.lenguaje)"
+            >
+              {{ pestana.nombre }}
+            </button>
+          }
+        </div>
+      </div>
+      <pre class="terminal__codigo" role="tabpanel"><code>{{ codigo() }}</code></pre>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,38 @@
+<section class="seccion" id="planes">
+  <div class="contenedor">
+    <header class="seccion__encabezado seccion__encabezado--centrado" appRevelar>
+      <span class="seccion__etiqueta">Planes</span>
+      <h2 class="seccion__titulo">Pagas por páginas leídas, nada más</h2>
+      <p class="seccion__descripcion">
+        Sin costos escondidos: cada página que procesas se descuenta de tu plan, y las facturas leídas desde
+        su XML no descuentan nada.
+      </p>
+    </header>
+
+    <ul class="planes">
+      @for (plan of planes; track plan.nombre) {
+        <li class="planes__plan" [class.planes__plan--destacado]="plan.destacado" appRevelar>
+          @if (plan.destacado) {
+            <span class="planes__insignia">Recomendado</span>
+          }
+          <h3 class="planes__nombre">{{ plan.nombre }}</h3>
+          <p class="planes__precio">{{ plan.precio }}</p>
+          <p class="planes__descripcion">{{ plan.descripcion }}</p>
+          <ul class="planes__incluye">
+            @for (item of plan.incluye; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+          <a
+            class="boton planes__accion"
+            [class.boton--primario]="plan.destacado"
+            [class.boton--secundario]="!plan.destacado"
+            [href]="enlacePrueba"
+          >
+            {{ plan.accion }}
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

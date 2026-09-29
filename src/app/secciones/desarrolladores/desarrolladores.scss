@@ -1,0 +1,117 @@
+.desarrolladores {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--color-fondo-elevado) 25%,
+    var(--color-fondo-elevado) 75%,
+    transparent
+  );
+
+  &__contenido {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: var(--espacio-8);
+    align-items: center;
+  }
+
+  &__capacidades {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--espacio-5);
+    margin: 0 0 var(--espacio-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  &__capacidad {
+    display: grid;
+    align-content: start;
+    gap: var(--espacio-1);
+    font-size: var(--texto-sm);
+
+    strong {
+      font-weight: 600;
+    }
+
+    span {
+      color: var(--color-texto-suave);
+    }
+  }
+}
+
+.terminal {
+  overflow: hidden;
+  border: 1px solid var(--color-borde-fuerte);
+  border-radius: var(--radio-lg);
+  background: #0a0d18;
+  box-shadow: var(--sombra-brillo);
+
+  &__barra {
+    display: flex;
+    align-items: center;
+    gap: var(--espacio-5);
+    padding: var(--espacio-3) var(--espacio-4);
+    border-bottom: 1px solid var(--color-borde);
+    background: rgb(255 255 255 / 0.02);
+  }
+
+  &__puntos {
+    display: flex;
+    gap: 6px;
+
+    i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-borde-fuerte);
+    }
+  }
+
+  &__pestanas {
+    display: flex;
+    gap: var(--espacio-1);
+  }
+
+  &__pestana {
+    padding: var(--espacio-1) var(--espacio-3);
+    border: 0;
+    border-radius: var(--radio-sm);
+    background: transparent;
+    color: var(--color-texto-tenue);
+    font: inherit;
+    font-size: var(--texto-xs);
+    cursor: pointer;
+    transition: background-color var(--transicion), color var(--transicion);
+
+    &:hover {
+      color: var(--color-texto);
+    }
+
+    &--activa {
+      background: var(--color-superficie-fuerte);
+      color: var(--color-texto);
+    }
+  }
+
+  &__codigo {
+    margin: 0;
+    padding: var(--espacio-5);
+    min-height: 19rem;
+    overflow-x: auto;
+    color: var(--color-texto-suave);
+    font-size: 0.8125rem;
+    line-height: 1.75;
+  }
+}
+
+@media (max-width: 960px) {
+  .desarrolladores__contenido {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .desarrolladores__capacidades {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,100 @@
+.plantillas {
+  &__filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espacio-2);
+    margin-bottom: var(--espacio-6);
+  }
+
+  &__filtro {
+    padding: var(--espacio-2) var(--espacio-5);
+    border: 1px solid var(--color-borde-fuerte);
+    border-radius: var(--radio-total);
+    background: var(--color-superficie);
+    color: var(--color-texto-suave);
+    font: inherit;
+    font-size: var(--texto-sm);
+    cursor: pointer;
+    transition: background-color var(--transicion), color var(--transicion), border-color var(--transicion);
+
+    &:hover {
+      color: var(--color-texto);
+    }
+
+    &--activo {
+      border-color: transparent;
+      background: var(--degradado-acento);
+      color: var(--color-texto-sobre-acento);
+      font-weight: 600;
+
+      &:hover {
+        color: var(--color-texto-sobre-acento);
+      }
+    }
+  }
+
+  // Columnas y no grilla: los grupos tienen de 1 a 10 plantillas, y en una grilla los cortos dejan huecos.
+  &__grupos {
+    columns: 2;
+    column-gap: var(--espacio-4);
+  }
+
+  &__grupo {
+    break-inside: avoid;
+    margin-bottom: var(--espacio-4);
+    padding: var(--espacio-6);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio-lg);
+    background: var(--color-superficie);
+  }
+
+  &__grupo-titulo {
+    margin-bottom: var(--espacio-4);
+    font-size: var(--texto-base);
+    color: var(--color-texto-suave);
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  &__lista {
+    display: grid;
+    gap: var(--espacio-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--espacio-4);
+    padding: var(--espacio-3) var(--espacio-4);
+    border-radius: var(--radio-md);
+    background: rgb(6 8 15 / 0.45);
+    font-size: var(--texto-sm);
+  }
+
+  &__pais {
+    flex-shrink: 0;
+    padding: 1px var(--espacio-2);
+    border: 1px solid var(--color-borde-fuerte);
+    border-radius: var(--radio-sm);
+    color: var(--color-texto-tenue);
+    font-family: var(--fuente-codigo);
+    font-size: 0.7rem;
+  }
+
+  &__nota {
+    margin-top: var(--espacio-6);
+    color: var(--color-texto-tenue);
+    font-size: var(--texto-sm);
+    text-align: center;
+  }
+}
+
+@media (max-width: 800px) {
+  .plantillas__grupos {
+    columns: 1;
+  }
+}

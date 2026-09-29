@@ -1,0 +1,35 @@
+<header class="encabezado" [class.encabezado--abierto]="menuAbierto()">
+  <nav class="encabezado__barra contenedor" aria-label="Principal">
+    <a class="encabezado__marca" href="#inicio" (click)="cerrarMenu()">
+      <img src="favicon.svg" alt="" width="28" height="28" />
+      <span>{{ sitio.producto }}</span>
+    </a>
+
+    <ul class="encabezado__enlaces" id="menu-principal">
+      @for (enlace of enlaces; track enlace.href) {
+        <li>
+          <a class="encabezado__enlace" [href]="enlace.href" (click)="cerrarMenu()">{{ enlace.texto }}</a>
+        </li>
+      }
+      <li class="encabezado__solo-movil">
+        <a class="encabezado__enlace" [href]="sitio.urlPanel">Entrar al panel</a>
+      </li>
+    </ul>
+
+    <div class="encabezado__acciones">
+      <a class="encabezado__enlace encabezado__enlace--panel" [href]="sitio.urlPanel">Entrar</a>
+      <a class="boton boton--primario" [href]="enlacePrueba">Pedir prueba</a>
+      <button
+        class="encabezado__menu"
+        type="button"
+        aria-controls="menu-principal"
+        [attr.aria-expanded]="menuAbierto()"
+        [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
+        (click)="alternarMenu()"
+      >
+        <span class="encabezado__menu-linea"></span>
+        <span class="encabezado__menu-linea"></span>
+      </button>
+    </div>
+  </nav>
+</header>

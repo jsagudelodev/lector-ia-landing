@@ -1,0 +1,33 @@
+<section class="seccion">
+  <div class="contenedor">
+    <div class="llamado" appRevelar>
+      <div class="llamado__fondo" aria-hidden="true"></div>
+      <h2 class="llamado__titulo">Prueba con tus documentos, no con los nuestros</h2>
+      <p class="llamado__texto">
+        Cuéntanos qué documentos lees y cuántos al mes. Te abrimos una cuenta de prueba para que lo compruebes
+        con tus propias facturas.
+      </p>
+      <div class="llamado__acciones">
+        <a class="boton boton--primario boton--grande" [href]="enlacePrueba">Pedir una prueba gratis</a>
+        <a class="boton boton--secundario boton--grande" [href]="sitio.urlPanel">Ya tengo cuenta</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="pie">
+  <div class="contenedor pie__contenido">
+    <div class="pie__marca">
+      <img src="favicon.svg" alt="" width="24" height="24" />
+      <span>{{ sitio.producto }}</span>
+    </div>
+    <nav class="pie__enlaces" aria-label="Pie de página">
+      <a href="#producto">Producto</a>
+      <a href="#plantillas">Plantillas</a>
+      <a href="#desarrolladores">Desarrolladores</a>
+      <a href="#preguntas">Preguntas</a>
+      <a [href]="'mailto:' + sitio.correoContacto">Contacto</a>
+    </nav>
+    <p class="pie__derechos">© {{ anio }} {{ sitio.empresa }}</p>
+  </div>
+</footer>
