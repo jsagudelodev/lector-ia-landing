@@ -171,24 +171,27 @@
     }
   }
 
+  // Se mueve con `transform` y no con `top`: animar la posición cuenta como desplazamiento de la página.
   &__escaner {
     position: absolute;
+    top: 0;
     left: 0;
     right: 0;
     height: 60px;
     background: linear-gradient(180deg, transparent, rgb(94 234 212 / 0.35), transparent);
     animation: escanear 3.2s ease-in-out infinite;
+    will-change: transform;
   }
 }
 
 @keyframes escanear {
   0% {
-    top: -60px;
+    transform: translateY(-60px);
   }
 
   60%,
   100% {
-    top: 100%;
+    transform: translateY(26rem);
   }
 }
 

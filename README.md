@@ -37,11 +37,16 @@ funcionalidad cambia allá, se revisa aquí: la página no debe prometer nada qu
 
 En `src/app/configuracion/sitio.ts`:
 
+- **`urlSitio`**: hoy es `https://lector-ia-landing.pages.dev`. La usan la imagen para redes y la URL
+  canónica, y **también está escrita en `public/robots.txt` y `public/sitemap.xml`**: cambiarla en los tres.
 - **`correoContacto`**: hoy es `hola@tu-dominio.com`. Es a donde llegan las solicitudes de prueba.
 - **`urlPanel`** y **`urlDocumentacion`**: hoy son `#`.
 - **`urlApi`**: la que aparece en los ejemplos de código.
 
-Y en el resto:
+Y los **precios de los planes**, que dicen «A consultar» hasta que se decidan (BL-47 del backend).
 
-- **Los precios de los planes** dicen «A consultar» hasta que se decidan (BL-47 del backend).
-- **La imagen para redes** (`og:image`): falta, y sin ella el enlace compartido sale sin vista previa.
+## Medición
+
+Lighthouse sobre la versión compilada (2026-09-29): celular 89 · 100 · 100 · 100 y escritorio
+99 · 100 · 100 · 100 (rendimiento, accesibilidad, buenas prácticas y SEO). Lo que falta en celular es
+compresión y caché, que pone el hosting, no el sitio.

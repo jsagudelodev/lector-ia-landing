@@ -1,5 +1,23 @@
 // Sistema de diseño de la landing: todos los valores salen de estos tokens.
 
+// Las fuentes se sirven desde public/fonts con una URL fija, para poder precargarlas en index.html:
+// si llegan después del primer pintado, el texto se reacomoda y la página «salta».
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+}
+
 :root {
   // Superficies
   --color-fondo: #06080f;
@@ -12,7 +30,8 @@
   // Texto
   --color-texto: #eef1f8;
   --color-texto-suave: #a3abc2;
-  --color-texto-tenue: #6b7390;
+  // 5,0:1 sobre el fondo elevado: el mínimo de accesibilidad (WCAG AA) es 4,5.
+  --color-texto-tenue: #7a83a1;
   --color-texto-sobre-acento: #05070d;
 
   // Acentos

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Metadatos } from './compartido/metadatos';
 import { Beneficios } from './secciones/beneficios/beneficios';
 import { Cierre } from './secciones/cierre/cierre';
 import { ComoFunciona } from './secciones/como-funciona/como-funciona';
@@ -24,20 +25,27 @@ import { Privacidad } from './secciones/privacidad/privacidad';
     Preguntas,
     Cierre,
   ],
+  // Lo que se ve al abrir se activa de una vez; el resto, al acercarse a la pantalla (ver app.config.ts).
   template: `
     <app-encabezado />
     <main>
       <app-portada />
-      <app-beneficios />
-      <app-como-funciona />
-      <app-plantillas />
-      <app-desarrolladores />
-      <app-privacidad />
-      <app-planes />
-      <app-preguntas />
+      @defer (hydrate on viewport) { <app-beneficios /> }
+      @defer (hydrate on viewport) { <app-como-funciona /> }
+      @defer (hydrate on viewport) { <app-plantillas /> }
+      @defer (hydrate on viewport) { <app-desarrolladores /> }
+      @defer (hydrate on viewport) { <app-privacidad /> }
+      @defer (hydrate on viewport) { <app-planes /> }
+      @defer (hydrate on viewport) { <app-preguntas /> }
     </main>
-    <app-cierre />
+    @defer (hydrate on viewport) { <app-cierre /> }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {}
+export class App {
+  private readonly metadatos = inject(Metadatos);
+
+  constructor() {
+    this.metadatos.aplicar();
+  }
+}

@@ -9,6 +9,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#06080f">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_CO">
@@ -16,6 +17,20 @@
   <meta property="og:title" content="Lector PDF IA · Tus documentos convertidos en datos">
   <meta property="og:description" content="Facturas, declaraciones de importación, RUT y extractos convertidos en JSON o Excel, con la evidencia de cada dato.">
   <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Datos estructurados: le dicen a Google que es un producto de software y de quién es. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Lector PDF IA",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "es",
+    "description": "Convierte PDF, fotos y el XML de la factura electrónica en datos estructurados (JSON o Excel), con la evidencia de cada campo y avisos cuando algo no cuadra.",
+    "publisher": { "@type": "Organization", "name": "Ingenio" }
+  }
+  </script>
 
   <!-- Marca que hay JavaScript: solo entonces se esconden las secciones para animarlas al hacer scroll.
        Sin él, todo se ve desde el principio. -->

@@ -1,0 +1,5 @@
+# PENDIENTE: cambiar la dirección del sitemap cuando haya dominio propio (ver src/app/configuracion/sitio.ts).
+User-agent: *
+Allow: /
+
+Sitemap: https://lector-ia-landing.pages.dev/sitemap.xml
