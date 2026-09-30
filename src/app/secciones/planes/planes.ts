@@ -22,6 +22,13 @@ interface IPlan {
  * en una semana; a quien se fue no se le vuelve a ver.
  *
  * Los pesos son una referencia a COP 4.000 por dólar: revísalos si el dólar se mueve de verdad.
+ *
+ * **Las cuotas de aquí existen de verdad en el backend y no pueden separarse.** Viven en
+ * `lector-ia-backend`, en `backend/app/core/config.py`: `TRIAL_MONTHLY_QUOTA_PAGES` (50),
+ * `TRIAL_DAYS` (14) y `DEFAULT_MONTHLY_QUOTA_PAGES` (300, el Starter). Si cambias un número aquí,
+ * cámbialo allá: hay una prueba (`backend/tests/test_planes_publicados.py`) que se pone roja si se
+ * desfasan, pero solo corre en el otro repositorio, así que **esta landing puede mentir sin que nada
+ * avise**. Y el que se entera primero es quien se registra.
  */
 @Component({
   selector: 'app-planes',
