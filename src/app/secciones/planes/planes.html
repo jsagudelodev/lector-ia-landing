@@ -17,6 +17,9 @@
           }
           <h3 class="planes__nombre">{{ plan.nombre }}</h3>
           <p class="planes__precio">{{ plan.precio }}</p>
+          @if (plan.nota) {
+            <p class="planes__nota">{{ plan.nota }}</p>
+          }
           <p class="planes__descripcion">{{ plan.descripcion }}</p>
           <ul class="planes__incluye">
             @for (item of plan.incluye; track item) {
@@ -34,5 +37,10 @@
         </li>
       }
     </ul>
+
+    <p class="planes__pie" appRevelar>
+      ¿Volúmenes más altos, documentos muy propios o plantillas hechas a tu medida?
+      <a [href]="enlacePrueba">Escríbenos</a> y lo armamos contigo.
+    </p>
   </div>
 </section>

@@ -51,6 +51,12 @@
     letter-spacing: -0.03em;
   }
 
+  &__nota {
+    margin-top: var(--espacio-2);
+    color: var(--color-texto-suave);
+    font-size: var(--texto-xs);
+  }
+
   &__descripcion {
     margin-top: var(--espacio-2);
     color: var(--color-texto-suave);
@@ -76,6 +82,17 @@
 
   &__accion {
     width: 100%;
+  }
+}
+
+.planes__pie {
+  margin-top: var(--espacio-6);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-sm);
+  text-align: center;
+
+  a {
+    color: var(--color-acento);
   }
 }
 
