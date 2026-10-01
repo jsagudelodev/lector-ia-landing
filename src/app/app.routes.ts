@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { Inicio } from './paginas/inicio/inicio';
+import { RevisarFactura } from './paginas/revisar-factura/revisar-factura';
 import { XmlDianExcel } from './paginas/xml-dian-excel/xml-dian-excel';
 
 /**
@@ -9,5 +10,6 @@ import { XmlDianExcel } from './paginas/xml-dian-excel/xml-dian-excel';
 export const routes: Routes = [
   { path: '', component: Inicio },
   { path: 'xml-dian-a-excel', component: XmlDianExcel },
+  { path: 'revisar-factura-electronica', component: RevisarFactura },
   { path: '**', redirectTo: '' },
 ];

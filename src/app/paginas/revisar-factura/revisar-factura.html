@@ -1,0 +1,147 @@
+<main>
+  <section class="herramienta">
+    <div class="herramienta__fondo" aria-hidden="true"></div>
+    <div class="contenedor herramienta__contenido">
+      <p class="herramienta__etiqueta">Herramienta gratis · sin registrarte</p>
+      <h1 class="herramienta__titulo">¿Tu factura electrónica <span class="texto-degradado">cuadra</span>?</h1>
+      <p class="herramienta__descripcion">
+        Sube el XML de una factura electrónica de la DIAN y te la mostramos legible, con lo que no cuadra:
+        los totales, los ítems, el dígito de verificación de los NIT y las fechas.
+      </p>
+
+      @if (!revision()) {
+        <div
+          class="zona"
+          [class.zona--encima]="arrastrando()"
+          (dragover)="alArrastrar($event, true)"
+          (dragleave)="alArrastrar($event, false)"
+          (drop)="alSoltar($event)"
+        >
+          <input id="factura" class="zona__entrada" type="file" accept=".xml,.zip" (change)="alElegir($event)" />
+          <label for="factura" class="zona__etiqueta">
+            <span class="zona__icono" aria-hidden="true">⬆</span>
+            <strong>{{ revisando() ? 'Revisando…' : 'Suelta aquí el XML de tu factura' }}</strong>
+            <span class="zona__ayuda">o haz clic para elegirlo · también el ZIP en que te llegó por correo</span>
+          </label>
+        </div>
+      }
+
+      @if (error(); as mensaje) {
+        <p class="aviso aviso--error" role="alert">{{ mensaje }}</p>
+      }
+
+      <ul class="herramienta__garantias">
+        <li>Sin cuenta ni tarjeta</li>
+        <li>No guardamos tus archivos</li>
+        <li>Al instante</li>
+      </ul>
+    </div>
+  </section>
+
+  @if (revision(); as r) {
+    <section class="contenedor resultado" aria-live="polite">
+      <div class="veredicto" [class.veredicto--bien]="r.cuadra" [class.veredicto--revisar]="!r.cuadra">
+        <span class="veredicto__icono" aria-hidden="true">{{ r.cuadra ? '✓' : '!' }}</span>
+        <div>
+          <h2 class="veredicto__titulo">
+            {{ r.cuadra ? 'Cuadra: no encontramos problemas' : 'Encontramos ' + r.avisos.length + (r.avisos.length === 1 ? ' cosa que revisar' : ' cosas que revisar') }}
+          </h2>
+          @if (!r.cuadra) {
+            <ul class="veredicto__avisos">
+              @for (aviso of r.avisos; track $index) {
+                <li>{{ aviso.message }}</li>
+              }
+            </ul>
+          }
+          <details class="veredicto__revisado">
+            <summary>Qué revisamos</summary>
+            <ul>
+              @for (revision of r.revisado; track revision) {
+                <li>{{ revision }}</li>
+              }
+            </ul>
+            <p>No consultamos a la DIAN: revisamos que la factura sea coherente consigo misma, no que esté aceptada.</p>
+          </details>
+        </div>
+      </div>
+
+      <div class="acciones">
+        <button type="button" class="boton boton--primario" [disabled]="descargando()" (click)="descargarExcel()">
+          {{ descargando() ? 'Armando el Excel…' : 'Descargar en Excel' }}
+        </button>
+        <button type="button" class="boton boton--secundario" (click)="otra()">Revisar otra factura</button>
+      </div>
+
+      <article class="factura">
+        <header class="factura__cabecera">
+          <div>
+            <p class="factura__rotulo">Factura electrónica</p>
+            <p class="factura__numero">{{ r.factura.numero_factura ?? 'Sin número' }}</p>
+          </div>
+          <dl class="factura__fechas">
+            <div><dt>Emisión</dt><dd>{{ r.factura.fecha_emision ?? '—' }}</dd></div>
+            <div><dt>Vencimiento</dt><dd>{{ r.factura.fecha_vencimiento ?? '—' }}</dd></div>
+            <div><dt>Moneda</dt><dd>{{ r.factura.moneda ?? '—' }}</dd></div>
+          </dl>
+        </header>
+
+        <div class="factura__partes">
+          @for (parte of [{ titulo: 'Emisor', datos: r.factura.emisor }, { titulo: 'Adquiriente', datos: r.factura.adquiriente }]; track parte.titulo) {
+            <div class="factura__parte">
+              <p class="factura__rotulo">{{ parte.titulo }}</p>
+              <p class="factura__nombre">{{ parte.datos?.nombre ?? '—' }}</p>
+              <p class="factura__dato">NIT {{ parte.datos?.nit ?? '—' }}</p>
+              @if (parte.datos?.ciudad) {
+                <p class="factura__dato">{{ parte.datos?.ciudad }}</p>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="factura__tabla-envoltura">
+          <table class="factura__tabla">
+            <thead>
+              <tr><th>Descripción</th><th class="num">Cantidad</th><th class="num">Valor unitario</th><th class="num">Total</th></tr>
+            </thead>
+            <tbody>
+              @for (item of r.factura.items ?? []; track $index) {
+                <tr>
+                  <td>{{ item.descripcion ?? '—' }}@if (item.codigo) {<span class="factura__codigo">{{ item.codigo }}</span>}</td>
+                  <td class="num">{{ numero(item.cantidad) }} {{ item.unidad ?? '' }}</td>
+                  <td class="num">{{ numero(item.valor_unitario) }}</td>
+                  <td class="num">{{ numero(item.valor_total) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <dl class="factura__totales">
+          @for (total of totales(); track total.nombre) {
+            <div><dt>{{ total.nombre }}</dt><dd>{{ numero(total.valor) }}</dd></div>
+          }
+          <div class="factura__total"><dt>Total</dt><dd>{{ numero($any(r.factura['total'])) }}</dd></div>
+        </dl>
+
+        @if (r.factura.cufe) {
+          <p class="factura__cufe">CUFE {{ r.factura.cufe }}</p>
+        }
+      </article>
+    </section>
+  }
+
+  <section class="seccion">
+    <div class="contenedor puente">
+      <div>
+        <h2 class="puente__titulo">¿Recibes facturas en PDF o en foto?</h2>
+        <p class="puente__texto">
+          Lector PDF IA las lee igual y les hace la misma revisión: los totales, los ítems y los NIT. Y te
+          dice de qué página salió cada dato.
+        </p>
+      </div>
+      <a class="boton boton--primario boton--grande" [href]="enlacePrueba">Crear mi cuenta gratis</a>
+    </div>
+  </section>
+</main>
+
+<app-cierre />

@@ -18,7 +18,8 @@ export class Encabezado {
     { texto: 'Cómo funciona', href: '/#como-funciona' },
     { texto: 'Plantillas', href: '/#plantillas' },
     { texto: 'Planes', href: '/#planes' },
-    { texto: 'XML a Excel gratis', href: '/xml-dian-a-excel' },
+    { texto: 'Revisa tu factura', href: '/revisar-factura-electronica' },
+    { texto: 'XML a Excel', href: '/xml-dian-a-excel' },
   ] as const;
 
   protected alternarMenu(): void {

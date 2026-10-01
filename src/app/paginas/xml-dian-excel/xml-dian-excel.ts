@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, inject, isDevMode, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { SIN_CONEXION, descargarArchivo, mensajeDeError, urlHerramienta } from '../../compartido/api-herramientas';
 import { Metadatos } from '../../compartido/metadatos';
-import { SITIO, enlacePrueba } from '../../configuracion/sitio';
+import { enlacePrueba } from '../../configuracion/sitio';
 import { Cierre } from '../../secciones/cierre/cierre';
 
 /** Lo que dice la API además del Excel: cuántas se leyeron y cuántos archivos no. */
@@ -88,21 +89,19 @@ export class XmlDianExcel {
     for (const archivo of this.archivos()) {
       formulario.append('files', archivo, archivo.name);
     }
-    const base = isDevMode() ? SITIO.urlApiLocal : SITIO.urlApi;
-
     try {
-      const respuesta = await fetch(`${base}/api/v1/tools/dian-xml-to-excel`, { method: 'POST', body: formulario });
+      const respuesta = await fetch(urlHerramienta('dian-xml-to-excel'), { method: 'POST', body: formulario });
       if (!respuesta.ok) {
-        this.error.set(await this.mensajeDeError(respuesta));
+        this.error.set(await mensajeDeError(respuesta, 'No pudimos convertir los archivos.'));
         return;
       }
-      this.descargar(await respuesta.blob());
+      descargarArchivo(await respuesta.blob(), 'facturas-dian.xlsx');
       this.resultado.set({
         leidas: Number(respuesta.headers.get('X-Facturas-Leidas') ?? 0),
         conError: Number(respuesta.headers.get('X-Archivos-Con-Error') ?? 0),
       });
     } catch {
-      this.error.set('No pudimos conectarnos con el servicio. Revisa tu conexión e inténtalo de nuevo.');
+      this.error.set(SIN_CONEXION);
     } finally {
       this.enviando.set(false);
     }
@@ -117,26 +116,5 @@ export class XmlDianExcel {
     if (this.archivos().length === MAX_ARCHIVOS && validos.length > 0) {
       this.error.set(`Puedes convertir hasta ${MAX_ARCHIVOS} facturas a la vez.`);
     }
-  }
-
-  private async mensajeDeError(respuesta: Response): Promise<string> {
-    if (respuesta.status === 429) {
-      return 'Hiciste muchas conversiones seguidas. Espera un minuto y vuelve a intentarlo.';
-    }
-    try {
-      const cuerpo = (await respuesta.json()) as { detail?: string };
-      return cuerpo.detail ?? 'No pudimos convertir los archivos.';
-    } catch {
-      return 'No pudimos convertir los archivos.';
-    }
-  }
-
-  private descargar(contenido: Blob): void {
-    const url = URL.createObjectURL(contenido);
-    const enlace = document.createElement('a');
-    enlace.href = url;
-    enlace.download = 'facturas-dian.xlsx';
-    enlace.click();
-    URL.revokeObjectURL(url);
   }
 }

@@ -1,0 +1,223 @@
+@use '../../../estilos/herramienta';
+
+.resultado {
+  max-width: 56rem;
+  padding-bottom: var(--espacio-7);
+}
+
+.veredicto {
+  display: flex;
+  gap: var(--espacio-4);
+  padding: var(--espacio-5) var(--espacio-6);
+  border-radius: var(--radio-lg);
+  border: 1px solid var(--color-borde-fuerte);
+
+  &--bien {
+    border-color: rgb(74 222 128 / 0.4);
+    background: rgb(74 222 128 / 0.07);
+  }
+
+  &--revisar {
+    border-color: rgb(251 191 36 / 0.45);
+    background: rgb(251 191 36 / 0.07);
+  }
+
+  &__icono {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--color-superficie-fuerte);
+    font-weight: 700;
+  }
+
+  &--bien &__icono {
+    color: var(--color-exito);
+  }
+
+  &--revisar &__icono {
+    color: var(--color-aviso);
+  }
+
+  &__titulo {
+    font-size: var(--texto-lg);
+  }
+
+  &__avisos {
+    margin: var(--espacio-3) 0 0;
+    padding-left: var(--espacio-5);
+    color: var(--color-texto-suave);
+    font-size: var(--texto-sm);
+  }
+
+  &__revisado {
+    margin-top: var(--espacio-3);
+    color: var(--color-texto-tenue);
+    font-size: var(--texto-sm);
+
+    summary {
+      cursor: pointer;
+    }
+
+    ul {
+      margin: var(--espacio-2) 0;
+      padding-left: var(--espacio-5);
+    }
+  }
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-3);
+  margin-block: var(--espacio-5);
+
+  .boton:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+}
+
+.factura {
+  padding: var(--espacio-6);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-lg);
+  background: var(--color-superficie);
+
+  &__cabecera {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--espacio-5);
+    padding-bottom: var(--espacio-5);
+    border-bottom: 1px solid var(--color-borde);
+  }
+
+  &__rotulo {
+    color: var(--color-texto-tenue);
+    font-size: var(--texto-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &__numero {
+    margin-top: var(--espacio-1);
+    font-size: var(--texto-xl);
+    font-weight: 700;
+  }
+
+  &__fechas {
+    display: flex;
+    gap: var(--espacio-5);
+    margin: 0;
+
+    dt {
+      color: var(--color-texto-tenue);
+      font-size: var(--texto-xs);
+    }
+
+    dd {
+      margin: 0;
+      font-size: var(--texto-sm);
+    }
+  }
+
+  &__partes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--espacio-5);
+    padding-block: var(--espacio-5);
+  }
+
+  &__nombre {
+    margin-top: var(--espacio-1);
+    font-weight: 600;
+  }
+
+  &__dato {
+    color: var(--color-texto-suave);
+    font-size: var(--texto-sm);
+  }
+
+  &__tabla-envoltura {
+    overflow-x: auto;
+  }
+
+  &__tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--texto-sm);
+
+    th {
+      padding: var(--espacio-2) var(--espacio-3);
+      border-bottom: 1px solid var(--color-borde-fuerte);
+      color: var(--color-texto-tenue);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    td {
+      padding: var(--espacio-3);
+      border-bottom: 1px solid var(--color-borde);
+      vertical-align: top;
+    }
+
+    .num {
+      text-align: right;
+      white-space: nowrap;
+    }
+  }
+
+  &__codigo {
+    display: block;
+    color: var(--color-texto-tenue);
+    font-family: var(--fuente-codigo);
+    font-size: 0.75rem;
+  }
+
+  &__totales {
+    display: grid;
+    gap: var(--espacio-2);
+    max-width: 22rem;
+    margin: var(--espacio-5) 0 0 auto;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--espacio-5);
+      font-size: var(--texto-sm);
+    }
+
+    dt {
+      color: var(--color-texto-suave);
+    }
+
+    dd {
+      margin: 0;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__totales &__total {
+    padding-top: var(--espacio-2);
+    border-top: 1px solid var(--color-borde-fuerte);
+    font-size: var(--texto-base);
+    font-weight: 700;
+  }
+
+  &__cufe {
+    margin-top: var(--espacio-5);
+    color: var(--color-texto-tenue);
+    font-family: var(--fuente-codigo);
+    font-size: 0.7rem;
+    word-break: break-all;
+  }
+}
+
+@media (max-width: 640px) {
+  .factura__partes {
+    grid-template-columns: 1fr;
+  }
+}
