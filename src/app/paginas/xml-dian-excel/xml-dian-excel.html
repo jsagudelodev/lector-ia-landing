@@ -1,0 +1,116 @@
+<main>
+  <section class="herramienta">
+    <div class="herramienta__fondo" aria-hidden="true"></div>
+    <div class="contenedor herramienta__contenido">
+      <p class="herramienta__etiqueta">Herramienta gratis · sin registrarte</p>
+      <h1 class="herramienta__titulo">Tus facturas electrónicas <span class="texto-degradado">XML a Excel</span></h1>
+      <p class="herramienta__descripcion">
+        Arrastra los XML de tus facturas electrónicas de la DIAN —o los ZIP en que te llegan por correo— y
+        descarga un Excel con todas: una hoja de facturas y otra de productos, listas para filtrar y sumar.
+      </p>
+
+      <div
+        class="zona"
+        [class.zona--encima]="arrastrando()"
+        (dragover)="alArrastrar($event, true)"
+        (dragleave)="alArrastrar($event, false)"
+        (drop)="alSoltar($event)"
+      >
+        <input id="archivos" class="zona__entrada" type="file" accept=".xml,.zip" multiple (change)="alElegir($event)" />
+        <label for="archivos" class="zona__etiqueta">
+          <span class="zona__icono" aria-hidden="true">⬆</span>
+          <strong>Suelta aquí tus XML o ZIP</strong>
+          <span class="zona__ayuda">o haz clic para elegirlos · hasta {{ maxArchivos }} facturas a la vez</span>
+        </label>
+      </div>
+
+      @if (descartados() > 0) {
+        <p class="aviso aviso--suave">
+          Dejamos fuera {{ descartados() }} {{ descartados() === 1 ? 'archivo' : 'archivos' }}: aquí solo se leen XML y ZIP.
+        </p>
+      }
+
+      @if (archivos().length > 0) {
+        <div class="lista">
+          <div class="lista__cabecera">
+            <span>{{ archivos().length }} {{ archivos().length === 1 ? 'archivo' : 'archivos' }}</span>
+            <button type="button" class="lista__limpiar" (click)="limpiar()">Quitar todos</button>
+          </div>
+          <ul class="lista__archivos">
+            @for (archivo of archivos(); track $index; let indice = $index) {
+              <li class="lista__archivo">
+                <span class="lista__nombre">{{ archivo.name }}</span>
+                <button type="button" class="lista__quitar" [attr.aria-label]="'Quitar ' + archivo.name" (click)="quitar(indice)">✕</button>
+              </li>
+            }
+          </ul>
+          <button type="button" class="boton boton--primario boton--grande lista__convertir" [disabled]="!puedeConvertir()" (click)="convertir()">
+            {{ enviando() ? 'Convirtiendo…' : 'Convertir a Excel' }}
+          </button>
+        </div>
+      }
+
+      @if (error(); as mensaje) {
+        <p class="aviso aviso--error" role="alert">{{ mensaje }}</p>
+      }
+
+      @if (resultado(); as r) {
+        <div class="aviso aviso--exito" role="status">
+          <strong>Listo: {{ r.leidas }} {{ r.leidas === 1 ? 'factura leída' : 'facturas leídas' }}.</strong>
+          Tu Excel se descargó.
+          @if (r.conError > 0) {
+            {{ r.conError }} {{ r.conError === 1 ? 'archivo no se pudo leer' : 'archivos no se pudieron leer' }}: está
+            en la hoja «Errores».
+          }
+        </div>
+      }
+
+      <ul class="herramienta__garantias">
+        <li>Sin cuenta ni tarjeta</li>
+        <li>No guardamos tus archivos</li>
+        <li>Exacto: se lee el XML, no se adivina</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="seccion">
+    <div class="contenedor puente">
+      <div>
+        <h2 class="puente__titulo">¿Solo tienes el PDF o una foto de la factura?</h2>
+        <p class="puente__texto">
+          Lector PDF IA la lee igual: el PDF, el escaneo o la foto del celular, con los mismos datos y la
+          página de donde salió cada uno. Y no solo facturas: también declaraciones de importación, RUT,
+          extractos y 22 documentos más.
+        </p>
+      </div>
+      <a class="boton boton--primario boton--grande" [href]="enlacePrueba">Crear mi cuenta gratis</a>
+    </div>
+  </section>
+
+  <section class="seccion seccion--sin-arriba">
+    <div class="contenedor preguntas-cortas">
+      <h2 class="seccion__titulo">Preguntas frecuentes</h2>
+      <details class="pregunta">
+        <summary>¿Qué datos trae el Excel?</summary>
+        <p>
+          En «Facturas», una fila por factura: número, fecha, CUFE, emisor, adquiriente, subtotal, impuestos,
+          retenciones y total. En «Productos», una fila por ítem —código, descripción, cantidad, valor— con el
+          número y el emisor de su factura al lado.
+        </p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Guardan mis facturas?</summary>
+        <p>No. Se leen para armar el Excel y se olvidan: no quedan en nuestros servidores.</p>
+      </details>
+      <details class="pregunta">
+        <summary>¿Por qué es gratis?</summary>
+        <p>
+          Porque el XML de la factura electrónica ya trae los datos ordenados y se lee sin inteligencia
+          artificial. Lo que cuesta es leer un PDF o una foto, y para eso está el lector.
+        </p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<app-cierre />

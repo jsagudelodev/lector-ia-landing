@@ -1,6 +1,6 @@
 <header class="encabezado" [class.encabezado--abierto]="menuAbierto()">
   <nav class="encabezado__barra contenedor" aria-label="Principal">
-    <a class="encabezado__marca" href="#inicio" [attr.aria-label]="sitio.producto + ', inicio'" (click)="cerrarMenu()">
+    <a class="encabezado__marca" href="/" [attr.aria-label]="sitio.producto + ', inicio'" (click)="cerrarMenu()">
       <img src="favicon.svg" alt="" width="28" height="28" />
       <span>{{ sitio.producto }}</span>
     </a>

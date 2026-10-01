@@ -1,15 +1,14 @@
-import { TestBed } from '@angular/core/testing';
-import { App } from './app';
+import { DeferBlockState, TestBed } from '@angular/core/testing';
+import { Inicio } from './paginas/inicio/inicio';
+import { Encabezado } from './secciones/encabezado/encabezado';
 
-describe('App', () => {
+describe('Inicio', () => {
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [App],
-    }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [Inicio, Encabezado] }).compileComponents();
   });
 
   it('muestra el titular de la portada', async () => {
-    const fixture = TestBed.createComponent(App);
+    const fixture = TestBed.createComponent(Inicio);
     await fixture.whenStable();
     const pagina = fixture.nativeElement as HTMLElement;
 
@@ -17,16 +16,22 @@ describe('App', () => {
   });
 
   it('tiene todas las secciones a las que enlaza el menú', async () => {
-    const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const pagina = fixture.nativeElement as HTMLElement;
+    const menu = TestBed.createComponent(Encabezado);
+    const inicio = TestBed.createComponent(Inicio);
+    await Promise.all([menu.whenStable(), inicio.whenStable()]);
+    // Las secciones van en `@defer`: en el navegador se muestran al llegar a la pantalla, aquí se piden.
+    for (const bloque of await inicio.getDeferBlocks()) {
+      await bloque.render(DeferBlockState.Complete);
+    }
+    const pagina = inicio.nativeElement as HTMLElement;
 
-    // `#` a secas es la URL del panel, que todavía no está definida (ver `SITIO.urlPanel`): no es una sección.
-    const destinos = [...pagina.querySelectorAll<HTMLAnchorElement>('app-encabezado a[href^="#"]')]
-      .map((a) => a.getAttribute('href'))
-      .filter((href) => href !== '#');
+    // Los enlaces del menú son `/#seccion`, para que funcionen desde cualquier página.
+    const destinos = [...(menu.nativeElement as HTMLElement).querySelectorAll<HTMLAnchorElement>('a[href^="/#"]')].map(
+      (a) => a.getAttribute('href')!.slice(1),
+    );
+    expect(destinos.length).toBeGreaterThan(0);
     for (const destino of destinos) {
-      expect(pagina.querySelector(destino!), `falta la sección ${destino}`).not.toBeNull();
+      expect(pagina.querySelector(destino), `falta la sección ${destino}`).not.toBeNull();
     }
   });
 });

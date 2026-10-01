@@ -13,11 +13,12 @@ export class Encabezado {
   protected readonly menuAbierto = signal(false);
 
   protected readonly enlaces = [
-    { texto: 'Producto', href: '#producto' },
-    { texto: 'Cómo funciona', href: '#como-funciona' },
-    { texto: 'Plantillas', href: '#plantillas' },
-    { texto: 'Desarrolladores', href: '#desarrolladores' },
-    { texto: 'Planes', href: '#planes' },
+    // `/#…` y no `#…`: así llevan a la sección del inicio también desde la página de una herramienta.
+    { texto: 'Producto', href: '/#producto' },
+    { texto: 'Cómo funciona', href: '/#como-funciona' },
+    { texto: 'Plantillas', href: '/#plantillas' },
+    { texto: 'Planes', href: '/#planes' },
+    { texto: 'XML a Excel gratis', href: '/xml-dian-a-excel' },
   ] as const;
 
   protected alternarMenu(): void {

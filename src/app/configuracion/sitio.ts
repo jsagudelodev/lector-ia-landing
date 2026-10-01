@@ -14,8 +14,14 @@ export const SITIO = {
   correoContacto: 'hola@tu-dominio.com',
   /** Panel web del cliente. PENDIENTE: su URL pública. */
   urlPanel: '#',
-  /** API pública, para los ejemplos de código. PENDIENTE: la URL con dominio propio. */
-  urlApi: 'https://api.tu-dominio.com',
+  /**
+   * API pública: la llaman las herramientas gratis y aparece en los ejemplos de código. Es la de Cloud
+   * Run, que ya figura en la documentación pública. PENDIENTE: la URL con dominio propio. En desarrollo
+   * (`npm start`) las herramientas usan `urlApiLocal`.
+   */
+  urlApi: 'https://lectoria-130090995386.us-central1.run.app',
+  /** El backend corriendo en tu máquina (`uvicorn`, puerto 8000), para probar las herramientas en local. */
+  urlApiLocal: 'http://127.0.0.1:8000',
   /** Documentación de la API (/redoc). PENDIENTE: su URL pública. */
   urlDocumentacion: '#',
 } as const;
