@@ -1,0 +1,94 @@
+<main>
+  <section class="herramienta">
+    <div class="herramienta__fondo" aria-hidden="true"></div>
+    <div class="contenedor herramienta__contenido">
+      <p class="herramienta__etiqueta">Herramienta gratis · sin registrarte</p>
+      <h1 class="herramienta__titulo">
+        El <span class="texto-degradado">dígito de verificación</span> de un NIT
+      </h1>
+      <p class="herramienta__descripcion">
+        Escribe el NIT y lo calculamos con el módulo 11 de la DIAN. Pégalo como viene en la factura —con
+        puntos y con el guion— que nosotros nos entendemos.
+      </p>
+
+      <div class="calculadora">
+        <label class="calculadora__campo">
+          <span class="calculadora__etiqueta">NIT</span>
+          <input
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="900.276.962-1"
+            [value]="entrada()"
+            (input)="alEscribir($event)"
+            aria-describedby="nit-ayuda"
+          />
+        </label>
+
+        <label class="calculadora__opcion">
+          <input type="checkbox" [checked]="incluyeDv()" (change)="alCambiarModo($event)" />
+          <span>Lo que escribí ya trae el dígito al final</span>
+        </label>
+
+        <p id="nit-ayuda" class="calculadora__ayuda">
+          Déjalo marcado si copiaste el NIT completo de una factura. Quítalo si solo tienes el número.
+        </p>
+
+        @if (error(); as mensaje) {
+          <p class="calculadora__error" role="alert">{{ mensaje }}</p>
+        }
+
+        @if (resultado(); as r) {
+          @if (r.ok) {
+            <div class="resultado" [class.resultado--malo]="coincide() === false">
+              <p class="resultado__etiqueta">Dígito de verificación</p>
+              <p class="resultado__dv">{{ r.dv }}</p>
+              <p class="resultado__completo">{{ r.formateado }}</p>
+
+              @if (coincide() === true) {
+                <p class="resultado__veredicto resultado__veredicto--ok">
+                  <i class="pi pi-check-circle" aria-hidden="true"></i>
+                  Coincide con el que escribiste
+                </p>
+              } @else if (coincide() === false) {
+                <p class="resultado__veredicto resultado__veredicto--mal">
+                  <i class="pi pi-exclamation-triangle" aria-hidden="true"></i>
+                  No coincide: escribiste <strong>{{ escrito() }}</strong> y le corresponde
+                  <strong>{{ r.dv }}</strong>
+                </p>
+              }
+
+              <button type="button" class="resultado__copiar" (click)="copiar(r.formateado)">
+                <i class="pi" [class.pi-copy]="!copiado()" [class.pi-check]="copiado()" aria-hidden="true"></i>
+                {{ copiado() ? 'Copiado' : 'Copiar el NIT completo' }}
+              </button>
+            </div>
+          }
+        }
+      </div>
+
+      <div class="notas">
+        <p class="notas__privacidad">
+          <i class="pi pi-lock" aria-hidden="true"></i>
+          <strong>El número no sale de tu computador.</strong> El cálculo se hace aquí mismo, en tu
+          navegador: no se envía a ningún servidor ni se guarda en ninguna parte.
+        </p>
+        <p class="notas__limite">
+          Esto comprueba que el número sea consistente consigo mismo. <strong>No confirma que el NIT
+          exista</strong> ni en qué estado está ante la DIAN: para eso está el RUT.
+        </p>
+      </div>
+
+      <div class="puente">
+        <h2 class="puente__titulo">¿Lo estás sacando de una factura?</h2>
+        <p>
+          Si llegaste aquí es porque tienes el NIT en un documento y lo estás transcribiendo. Eso es
+          justo lo que hacemos: subes el PDF y salen el NIT, la razón social, las fechas, los ítems y
+          los totales — ya verificados, con el aviso cuando el dígito no cuadra.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <app-cierre />
+</main>
